@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="Shift-JIS">
+	<title>Spell generation for AI Art</title>
+	<style type="text/css">
+		*, *::before, *::after {
+		  box-sizing: border-box;
+		}
+		/*
+		body {
+		  color: #435757;
+		  background: radial-gradient(#fff, #dac4cd);
+		}
+		*/
+
+		.container {
+		  position: absolute;
+		  top: 50%;
+		  left: 50%;
+		  transform: translate(-50%, -50%);
+		}
+
+		input {
+		  position: absolute;
+		  left: -9999px;
+		}
+
+		label {
+		  float: left;
+		  width: 300px;
+		  display: block;
+		  position: relative;
+		  margin: 7.5px;
+		  padding: 15px 30px 15px 62px;
+		  border: 3px solid #fff;
+		  border-radius: 10px;
+		  color: #fff;
+		  background-color: #6a8494;
+		  box-shadow: 0 0 20px rgba(0, 0, 0, .2);
+		  white-space: nowrap;
+		  cursor: pointer;
+		  user-select: none;
+		  transition: background-color .2s, box-shadow .2s;
+		}
+
+		label::before {
+		  content: '';
+		  display: block;
+		  position: absolute;
+		  top: 10px;
+		  bottom: 10px;
+		  left: 10px;
+		  width: 32px;
+		  border: 3px solid #fff;
+		  border-radius: 100px;
+		  transition: background-color .2s;
+		}
+
+		label:hover, input:focus + label {
+		  box-shadow: 0 0 20px rgba(0, 0, 0, .6);
+		}
+
+		input:checked + label {
+		  background-color: #ab576c;
+		}
+
+		input:checked + label::before {
+		  background-color: #fff;
+		}
+
+		.line{
+		  position: relative;
+		  padding: 20px;
+		  text-align: center;
+		  width:100%;
+		  margin: 0 auto;
+		}
+		.line:before,
+		.line:after {
+		  position: absolute;
+		  content: '';
+		}
+
+		.line:after {
+		  top: 0;
+		  left: 0;
+		  width: 45px;
+		  height: 45px;
+		  border-top: 4px solid #000000;
+		  border-left: 4px solid #000000;
+		}
+		.line:before {
+		  right: 0;
+		  bottom: 0;
+		  width: 45px;
+		  height: 45px;
+		  border-right: 4px solid #000000;
+		  border-bottom: 4px solid #000000;
+		}
+	</style>
+</head>
+<body>
+	<h2 class="line" id="msg">ここにタグが表示されます</h2>
+
+	<div id="container">
+		<input id="check10" type="checkbox" name="tag" value="Atochi" onchange="changed(this.value)"><label for="check10">跡地</label>
+	</div>
+
+	<script>
+        var tags = document.getElementsByName("tag");
+		var msg = document.getElementById('msg');
+		
+		var indexList = [];
+
+		function changed(tag){
+			for (var i = 0; i < tags.length; i++) {
+				if (tags[i].value == tag && tags[i].checked) {
+					indexList.push(i);
+					break;
+				}else if(tags[i].value == tag && !tags[i].checked){
+					var num = indexList.indexOf(i);
+					indexList.splice(num, 1);
+					break;
+				}
+			}
+			msg.innerHTML = "ここにタグが表示されます";
+			for(var i = 0; i < indexList.length; i++){
+				if(msg.innerHTML == "ここにタグが表示されます"){
+					msg.innerHTML = tags[indexList[i]].value;
+				}else{
+					msg.innerHTML += ", " + tags[indexList[i]].value;
+				}
+			}
+		}
+	</script>
+
+</body>
+</html>
